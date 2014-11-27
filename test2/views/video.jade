@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  -for (var x = 0; x < 3; x++)
+        li item
+    
+  p
+    ='This code is <escaped>!'
+  p
+    != 'This code is <strong>not</strong> escaped!'
+  script.
+      var usingJade = true;
+      if (usingJade)
+        console.log('you are awesome')
+      else
+        console.log('use jade')
+  
+  -var user = {name: 'Forbes Lindesay'}
+        p Welcome #{user.name}
+
+    p Welcome 
+    
+prepend footer
+    p 这里是footer
+    我写一些纯文本看看
+    
