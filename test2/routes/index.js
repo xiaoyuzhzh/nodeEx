@@ -15,6 +15,10 @@ router.get('/db2', function(req, res) {
   res.render('db2', { title: 'double2' });
 });
 
+router.use('/param/:pa', function(req, res,next) {
+  res.send("param is : " + req.query.pa)
+});
+
 router.use('/sessionUse',function(req,res){
   var sess = req.session
   if (sess.views) {
@@ -27,7 +31,6 @@ router.use('/sessionUse',function(req,res){
     sess.views = 1
     res.end('welcome to the session demo. refresh!')
   }  
-    
 });
 
 module.exports = router;
