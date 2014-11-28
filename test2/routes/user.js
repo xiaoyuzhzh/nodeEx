@@ -10,11 +10,22 @@ router.get('/login', function(req, res) {
   res.render('login', { title: 'login' });
 });
 
+router.get('/logout',function(req,res){
+    if(req.session.name){
+        var xx = req.session.name;
+        req.session.name = null;
+        console.log(xx + ': has log out');
+        res.redirect('/');
+    }
+})
+
 /*valid*/
 router.use('/valid', function(req, res) {
     if(req.session){
       if(req.session.name){
           console.log(req.session.name + ": is logining now");
+          res.render('homepage', { title: 'homepage', userid:req.session.name});
+          return true;
       }
     }
     var query_doc = {userid: req.body.userid, password: req.body.password};
@@ -23,8 +34,7 @@ router.use('/valid', function(req, res) {
             if(doc == 1){
                 console.log(query_doc.userid + ": login success in " + new Date());
                 req.session.name = query_doc.userid;
-                res.send(req.session);
-                res.render('homepage', { title: 'homepage', user:query_doc});
+                res.render('homepage', { title: 'homepage', userid:query_doc.userid});
             }else{
                 console.log(query_doc.userid + ": login failed in " + new Date());
                 res.redirect('/');
